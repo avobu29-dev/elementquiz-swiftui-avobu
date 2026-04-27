@@ -1,38 +1,43 @@
-import UIKit
+import SwiftUI
 
-class ViewController: UIViewController {
-
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var answerLabel: UILabel!
+struct ContentView: View {
     
     let elementList = ["Carbon", "Gold", "Chlorine", "Sodium"]
     
-    var currentElementIndex = 0
+    @State private var currentElementIndex = 0
+    @State private var answerText = "?"
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        updateElement()
-    }
-    
-    func updateElement() {
-        let elementName = elementList[currentElementIndex]
-        let image = UIImage(named: elementName)
-        imageView.image = image
-        
-        answerLabel.text = "?"
-    }
-
-    @IBAction func showAnswer(_ sender: Any) {
-        answerLabel.text = elementList[currentElementIndex]
-    }
-    
-    @IBAction func next(_ sender: Any) {
-        currentElementIndex += 1
-        if currentElementIndex >= elementList.count {
-            currentElementIndex = 0
+    var body: some View {
+        VStack(spacing: 20) {
+            
+            Image(elementList[currentElementIndex])
+                .resizable()
+                .scaledToFit()
+                .frame(height: 200)
+            
+            Text(answerText)
+                .font(.largeTitle)
+            
+            HStack {
+                
+                Button("Show Answer") {
+                    answerText = elementList[currentElementIndex]
+                }
+                .buttonStyle(.borderedProminent)
+                
+                Button("Next") {
+                    currentElementIndex += 1
+                    
+                    if currentElementIndex >= elementList.count {
+                        currentElementIndex = 0
+                    }
+                    
+                    answerText = "?"
+                }
+                .buttonStyle(.bordered)
+            }
         }
-        
-        updateElement()
+        .padding()
     }
 }
 
