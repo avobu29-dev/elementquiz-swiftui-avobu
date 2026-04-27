@@ -40,4 +40,6 @@ struct ContentView: View { //There is no viewcontroller; there is a view struct 
         .padding()
     }
 }
-
+#Preview (
+    ContentView
+)
